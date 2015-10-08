@@ -24,6 +24,12 @@ socket.on('connect', function(){
         case 'motion':
             readMotionSensors();
             break;
+        case 'pressure':
+            readPressureSensors();
+            break;
+        case 'temperature':
+            readTemperatureSensors();
+            break;
         default:
        readAllSensors();
     }
@@ -109,3 +115,34 @@ function readMotionSensors(){
 }
 
 
+function readPressureSensors() {
+    console.log('Reading Pressure Sensor Values');
+    var pressure = 0;
+    var pressureScale = 0;
+    setInterval(function () {
+        fs.readFile('/sys/class/i2c-dev/i2c-1/device/1-0060/iio\:device0/in_pressure_raw', 'utf8', function (err,pressure) {
+
+            if (err) {
+                return console.log(err);
+            }
+
+        });
+
+        fs.readFile('/sys/class/i2c-dev/i2c-1/device/1-0060/iio\:device0/in_pressure_scale', 'utf8', function (err,pressureScale) {
+
+            if (err) {
+                return console.log(err);
+            }
+
+        });
+    }, 100)
+socket.emit('pressure', pressure*pressureScale)
+}
+
+function readTemperatureSensors() {
+    console.log('Reading Temperature Sensor Values');
+    setInterval(function () {
+
+    }, 100)
+
+}
