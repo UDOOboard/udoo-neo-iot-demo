@@ -22,6 +22,22 @@
     <span id="MotionCar2mag">MAG</span>
     <span id="MotionCar2gyr">GYR</span></div>
 
+
+<canvas id="car1speed" width="250" height="250" style="background-color: black; border-radius: 125px; box-shadow: 0 0 25px gray; border: 5px solid #ddd">
+    [No canvas support]
+</canvas>
+
   </body>
+
+  <script src="/js/rgraph/libraries/RGraph.common.core.js"></script>
+  <script src="/js/rgraph/libraries/RGraph.common.dynamic.js"></script>
+  <script src="/js/rgraph/libraries/RGraph.common.effects.js"></script>
+  <script src="/js/rgraph/libraries/RGraph.gauge.js"></script>
+
   <script type='text/javascript' src='./js/socket-gpio.js'></script>
+  <script>
+      window.onload = function () {
+          createGauge("car1speed", 240);
+      };
+  </script>
 </html>

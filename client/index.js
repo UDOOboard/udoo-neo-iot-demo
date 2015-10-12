@@ -159,15 +159,17 @@ function readCar1Sensors(){
     setInterval(function () {
 
         fs.readFile('/sys/class/misc/FreescaleAccelerometer/data', 'utf8', function (err,accel) {
-            var self=this;
             if (err) {
                 return console.log(err);
             }
-            //acc = Math.sqrt(((accel[0])*(accel[0]))+((accel[1])*(accel[1])+((accel[2])*(accel[2]))))
-            str = accel;
-            var arr = str.split(",");
+            var arr = accel.split(",");
             arr = arr.map(function (val) { return +val + 1; });
-            acc = Math.floor(Math.sqrt(((arr[0])*(arr[0]))+(((arr[1]))*(arr[1]))+((arr[2])*(arr[2]))));
+            acc = Math.sqrt(arr[0]*arr[0]+arr[1]*arr[1]);
+
+            acc = acc - 800;
+            if (acc < 0) acc = 0;
+            acc = Math.floor(acc * (240/17000));
+
             console.log(acc);
             //socket.emit('motion',data);
         });
