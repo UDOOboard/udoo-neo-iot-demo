@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+  </head>
+  <script type='text/javascript' src='./js/jquery-2.1.4.min.js'></script>
+  <script src="/socket.io/socket.io.js"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+
+
+  <body>
+
+  <h1>MAH </h1>
+  <span id="ConnStatus">Not Connected</span>
+  <div> <h3>Car1 </h3>
+  <span id="MotionCar1acc">ACC</span>
+  <span id="MotionCar1mag">MAG</span>
+  <span id="MotionCar1gyr">GYR</span></div>
+  <div> <h3>Car2 </h3>
+    <span id="MotionCar2acc">ACC</span>
+    <span id="MotionCar2mag">MAG</span>
+    <span id="MotionCar2gyr">GYR</span></div>
+
+  </body>
+  <script type='text/javascript' src='./js/socket-gpio.js'></script>
+</html>

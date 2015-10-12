@@ -1,10 +1,21 @@
 /**
- * Created by Michelangelo on 08/10/2015.
+ * Created by Michelangelo on 11/10/2015.
  */
+var socket = io();
 
-var server = require('http').createServer();
-var io = require('socket.io')(server);
-io.on('connection', function(socket){
+socket.on('consoleMessage', function(message) {
+    var nodeListItem = document.createElement('LI');
+    var nodeText = document.createTextNode(message);
+
+    nodeListItem.appendChild(nodeText);
+    document.getElementById('console').appendChild(nodeListItem);
+
+    var divConsole = document.getElementById('div-console');
+    divConsole.scrollTop = divConsole.scrollHeight;
+
+});
+
+socket.on('connection', function(socket){
     socket.on('hello', function(data){
         console.log('*** Client '+data.ip+' connected');
     });
@@ -21,4 +32,3 @@ io.on('connection', function(socket){
         console.log('A client just disconnected')
     });
 });
-server.listen(3000);

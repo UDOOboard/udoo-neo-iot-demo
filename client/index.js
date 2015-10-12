@@ -30,6 +30,13 @@ socket.on('connect', function(){
         case 'temperature':
             readTemperatureSensors();
             break;
+        case 'car1':
+            readCar1Sensors();
+            break;
+        case 'car2':
+            readCar2Sensors();
+            break;
+
         default:
        readAllSensors();
     }
@@ -87,8 +94,12 @@ function readMotionSensors(){
             if (err) {
                 return console.log(err);
             }
-            acc = accel;
-            //console.log(data);
+            //acc = accel;
+            str = accel;
+            var arr = str.split(",");
+            arr = arr.map(function (val) { return +val + 1; });
+            acc = Math.sqrt(((arr[0])*(arr[0]))+(((arr[1]))*(arr[1]))+((arr[2])*(arr[2])));
+            console.log('acc'+acc);
             //socket.emit('motion',data);
         });
         fs.readFile('/sys/class/misc/FreescaleGyroscope/data', 'utf8', function (err,gyrosc) {
@@ -111,6 +122,81 @@ function readMotionSensors(){
             //socket.emit('motion',data);
         });
     socket.emit('motion', {a:acc, g:gyro, m:magn})
+    }, 100)
+}
+
+
+function readCar1Sensors(){
+
+    var acc = 0;
+    var gyro = 0;
+    var magn =0;
+    console.log('Reading Motion Sensors Values');
+    exec("echo 1 > /sys/class/misc/FreescaleGyroscope/enable", function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log('Cannot Enable Gyroscope: '+error);
+        }
+        else {
+            console.log('Gyroscope enabled');
+        }
+    });
+    exec("echo 1 > /sys/class/misc/FreescaleAccelerometer/enable", function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log('Cannot Enable Accelerometer: '+error);
+        }
+        else {
+            console.log('Accelerometer enabled');
+        }
+    });
+    exec("echo 1 > /sys/class/misc/FreescaleMagnetometer/enable", function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log('Cannot Enable Magnetometer: '+error);
+        }
+        else {
+            console.log('Magnetometer enabled');
+        }
+    });
+    setInterval(function () {
+
+        fs.readFile('/sys/class/misc/FreescaleAccelerometer/data', 'utf8', function (err,accel) {
+            var self=this;
+            if (err) {
+                return console.log(err);
+            }
+            //acc = Math.sqrt(((accel[0])*(accel[0]))+((accel[1])*(accel[1])+((accel[2])*(accel[2]))))
+            str = accel;
+            var arr = str.split(",");
+            arr = arr.map(function (val) { return +val + 1; });
+            acc = Math.floor(Math.sqrt(((arr[0])*(arr[0]))+(((arr[1]))*(arr[1]))+((arr[2])*(arr[2]))));
+            console.log(acc);
+            //socket.emit('motion',data);
+        });
+        fs.readFile('/sys/class/misc/FreescaleGyroscope/data', 'utf8', function (err,gyrosc) {
+            var self=this;
+            if (err) {
+                return console.log(err);
+            }
+            str = gyrosc;
+            var arr = str.split(",");
+            arr = arr.map(function (val) { return +val + 1; });
+            gyro = Math.floor(Math.sqrt(((arr[0])*(arr[0]))+(((arr[1]))*(arr[1]))+((arr[2])*(arr[2]))));
+            console.log(gyro);
+            //socket.emit('motion',data);
+        });
+
+        fs.readFile('/sys/class/misc/FreescaleMagnetometer/data', 'utf8', function (err,magnet) {
+            var self=this;
+            if (err) {
+                return console.log(err);
+            }
+            str = magnet;
+            var arr = str.split(",");
+            arr = arr.map(function (val) { return +val + 1; });
+            magn = Math.floor(Math.sqrt(((arr[0])*(arr[0]))+(((arr[1]))*(arr[1]))+((arr[2])*(arr[2]))));
+            console.log(magn);
+            //socket.emit('motion',data);
+        });
+        socket.emit('car1', {a:acc, g:gyro, m:magn})
     }, 100)
 }
 

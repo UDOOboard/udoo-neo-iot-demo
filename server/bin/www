@@ -1,0 +1,89 @@
+#!/usr/bin/env node
+var express = require('express');
+var app = require('../app');
+var server = require('http').createServer(app);
+var socket = require('socket.io')(server);
+var port = process.env.PORT || 3000;
+
+server.listen(port, function () {
+  console.log('Server listening at port %d', port);
+});
+app.use(express.static(__dirname + '/public'));
+
+
+
+
+socket.on('connection', function (socket) {
+  console.log('A client Connected');
+
+  socket.emit('client-connect', '');
+
+  socket.on('motion', function (data) {
+    //console.log(data);
+    socket.broadcast.emit('motion', data);
+  });
+
+  socket.on('car1', function (data) {
+    //console.log(data);
+    socket.broadcast.emit('car1', data);
+  });
+
+  socket.on('car2', function (data) {
+    //console.log(data);
+    socket.broadcast.emit('car2', data);
+  });
+
+
+});
+
+
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind);
+}
