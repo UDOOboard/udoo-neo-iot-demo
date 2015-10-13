@@ -1,43 +1,102 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-  </head>
-  <script type='text/javascript' src='./js/jquery-2.1.4.min.js'></script>
-  <script src="/socket.io/socket.io.js"></script>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>UDOO Neo IoT playground</title>
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
 
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <a class="navbar-brand">UDOO Neo IoT playground</a>
+            </div>
+        </nav>
 
+        <div id="iot-ct">
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="panel panel-warning" style="margin-left:15px;">
+                        <div class="panel-heading">
+                            Smart Home
+                        </div>
+                        <div class="panel-body">
+                            <br><br><br><br><br><br><br><br><br>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xs-6">
+                    <div class="panel panel-warning" style="margin-right:15px;">
+                        <div class="panel-heading">
+                            Smart Parking
+                        </div>
+                        <div class="panel-body">
+                            <br><br><br><br><br><br><br><br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-xs-6">
+                    <div class="panel panel-warning" style="margin-left:15px;">
+                        <div class="panel-heading">
+                            Smart Car
+                        </div>
+                        <div class="panel-body">
+                            
+                            
+                            <span id="ConnStatus">Not Connected</span>
+                            <div> <h3>Car1 </h3>
+                            <span id="MotionCar1acc">ACC</span>
+                            <span id="MotionCar1mag">MAG</span>
+                            <span id="MotionCar1gyr">GYR</span></div>
+                            <div> <h3>Car2 </h3>
+                            <span id="MotionCar2acc">ACC</span>
+                            <span id="MotionCar2mag">MAG</span>
+                            <span id="MotionCar2gyr">GYR</span></div>
 
-  <body>
+                            <canvas id="car1speed" width="250" height="250" style="background-color: black; border-radius: 125px; box-shadow: 0 0 25px gray; border: 5px solid #ddd">
+                            [No canvas support]
+                            </canvas>
+                            
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-xs-6">
+                    <div class="panel panel-warning" style="margin-right:15px;">
+                        <div class="panel-heading">
+                            Smart Truck
+                        </div>
+                        <div class="panel-body">
+                            <br><br><br><br><br><br><br><br><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <h1>MAH </h1>
-  <span id="ConnStatus">Not Connected</span>
-  <div> <h3>Car1 </h3>
-  <span id="MotionCar1acc">ACC</span>
-  <span id="MotionCar1mag">MAG</span>
-  <span id="MotionCar1gyr">GYR</span></div>
-  <div> <h3>Car2 </h3>
-    <span id="MotionCar2acc">ACC</span>
-    <span id="MotionCar2mag">MAG</span>
-    <span id="MotionCar2gyr">GYR</span></div>
-
-
-<canvas id="car1speed" width="250" height="250" style="background-color: black; border-radius: 125px; box-shadow: 0 0 25px gray; border: 5px solid #ddd">
-    [No canvas support]
-</canvas>
-
-  </body>
-
-  <script src="/js/rgraph/libraries/RGraph.common.core.js"></script>
-  <script src="/js/rgraph/libraries/RGraph.common.dynamic.js"></script>
-  <script src="/js/rgraph/libraries/RGraph.common.effects.js"></script>
-  <script src="/js/rgraph/libraries/RGraph.gauge.js"></script>
-
-  <script type='text/javascript' src='./js/socket-gpio.js'></script>
-  <script>
-      window.onload = function () {
-          createGauge("car1speed", 240);
-      };
-  </script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="socket.io/socket.io.js"></script>
+    <script src="js/rgraph/libraries/RGraph.common.core.js"></script>
+    <script src="js/rgraph/libraries/RGraph.common.dynamic.js"></script>
+    <script src="js/rgraph/libraries/RGraph.common.effects.js"></script>
+    <script src="js/rgraph/libraries/RGraph.gauge.js"></script>
+    <script type='text/javascript' src='js/socket-gpio.js'></script>
+    <script>
+        window.onload = function () {
+            createGauge("car1speed", 240);
+        };
+    </script>
+</body>
 </html>
