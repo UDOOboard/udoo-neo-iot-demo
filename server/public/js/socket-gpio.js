@@ -29,6 +29,20 @@ socket.on('car2', function(data){
     notifyCar2Data(data);
 });
 
+socket.on('house', function(data){
+    //console.log(data);
+    notifyHouseData(data);
+});
+
+socket.on('smartcity', function(data){
+    //console.log(data);
+    notifySmartCityData(data);
+});
+
+socket.on('truck', function(data){
+    //console.log(data);
+    notifyTruckData(data);
+});
 
     socket.on('temperature', function(data){
         console.log('Temperature: '+data);
@@ -70,6 +84,33 @@ function notifyCar2Data(data){
     document.getElementById('MotionCar2acc').innerHTML=data.a;
     document.getElementById('MotionCar2gyr').innerHTML=data.g;
     document.getElementById('MotionCar2mag').innerHTML=data.m;
+}
+
+function notifyHouseData(data){
+
+    document.getElementById('HouseWater').innerHTML=data.water;
+    document.getElementById('HouseSmoke').innerHTML=data.smoke;
+    document.getElementById('HouseTemp').innerHTML=data.temp;
+    document.getElementById('HouseGas').innerHTML=data.gas;
+    document.getElementById('HouseSolar').innerHTML=data.solar;
+}
+
+function notifySmartCityData(data){
+
+    document.getElementById('SmartCityir1').innerHTML=data.ir1;
+    document.getElementById('SmartCityir2').innerHTML=data.ir2;
+    document.getElementById('SmartCitylight').innerHTML=data.light;
+    document.getElementById('SmartCitysound').innerHTML=data.sound;
+    document.getElementById('SmartCitywind').innerHTML=data.wind;
+    document.getElementById('SmartCitytrash').innerHTML=data.trash;
+}
+
+function notifyTruckData(data){
+
+    document.getElementById('Truckacc').innerHTML=data.a;
+    document.getElementById('Truckgyr').innerHTML=data.g;
+    document.getElementById('Truckmag').innerHTML=data.m;
+    document.getElementById('Truckdoor').innerHTML=data.door;
 }
 
 function createGauge(name, max) {

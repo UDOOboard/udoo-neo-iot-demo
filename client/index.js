@@ -36,7 +36,15 @@ socket.on('connect', function(){
         case 'car2':
             readCar2Sensors();
             break;
-
+        case 'house':
+            readHouseSensors();
+            break;
+        case 'smartcity':
+            readSmartCitySensors();
+            break;
+        case 'truck':
+            readTruckSensors();
+            break;
         default:
        readAllSensors();
     }
@@ -202,35 +210,249 @@ function readCar1Sensors(){
     }, 100)
 }
 
+function readCar2Sensors(){
 
-function readPressureSensors() {
-    console.log('Reading Pressure Sensor Values');
-    var pressure = 0;
-    var pressureScale = 0;
+    var acc = 0;
+    var gyro = 0;
+    var magn =0;
+    console.log('Reading Motion Sensors Values');
+    exec("echo 1 > /sys/class/misc/FreescaleGyroscope/enable", function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log('Cannot Enable Gyroscope: '+error);
+        }
+        else {
+            console.log('Gyroscope enabled');
+        }
+    });
+    exec("echo 1 > /sys/class/misc/FreescaleAccelerometer/enable", function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log('Cannot Enable Accelerometer: '+error);
+        }
+        else {
+            console.log('Accelerometer enabled');
+        }
+    });
+    exec("echo 1 > /sys/class/misc/FreescaleMagnetometer/enable", function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log('Cannot Enable Magnetometer: '+error);
+        }
+        else {
+            console.log('Magnetometer enabled');
+        }
+    });
     setInterval(function () {
-        fs.readFile('/sys/class/i2c-dev/i2c-1/device/1-0060/iio\:device0/in_pressure_raw', 'utf8', function (err,pressure) {
 
+        fs.readFile('/sys/class/misc/FreescaleAccelerometer/data', 'utf8', function (err,accel) {
             if (err) {
                 return console.log(err);
             }
+            var arr = accel.split(",");
+            arr = arr.map(function (val) { return +val + 1; });
+            acc = Math.sqrt(arr[0]*arr[0]+arr[1]*arr[1]);
 
+            acc = acc - 800;
+            if (acc < 0) acc = 0;
+            acc = Math.floor(acc * (240/17000));
+
+            console.log(acc);
+            //socket.emit('motion',data);
         });
-
-        fs.readFile('/sys/class/i2c-dev/i2c-1/device/1-0060/iio\:device0/in_pressure_scale', 'utf8', function (err,pressureScale) {
-
+        fs.readFile('/sys/class/misc/FreescaleGyroscope/data', 'utf8', function (err,gyrosc) {
+            var self=this;
             if (err) {
                 return console.log(err);
             }
-
+            str = gyrosc;
+            var arr = str.split(",");
+            arr = arr.map(function (val) { return +val + 1; });
+            gyro = Math.floor(Math.sqrt(((arr[0])*(arr[0]))+(((arr[1]))*(arr[1]))+((arr[2])*(arr[2]))));
+            console.log(gyro);
+            //socket.emit('motion',data);
         });
+
+        fs.readFile('/sys/class/misc/FreescaleMagnetometer/data', 'utf8', function (err,magnet) {
+            var self=this;
+            if (err) {
+                return console.log(err);
+            }
+            str = magnet;
+            var arr = str.split(",");
+            arr = arr.map(function (val) { return +val + 1; });
+            magn = Math.floor(Math.sqrt(((arr[0])*(arr[0]))+(((arr[1]))*(arr[1]))+((arr[2])*(arr[2]))));
+            console.log(magn);
+            //socket.emit('motion',data);
+        });
+        socket.emit('car2', {a:acc, g:gyro, m:magn})
     }, 100)
-socket.emit('pressure', pressure*pressureScale)
 }
 
-function readTemperatureSensors() {
-    console.log('Reading Temperature Sensor Values');
+
+function readHouseSensors() {
+    var varwater = '00';
+    var varsmoke = '00';
+    var vartemp = '00';
+    var vargas = '00';
+    var varsolar = '00';
     setInterval(function () {
 
-    }, 100)
+        //
+        fs.readFile('/sys/bus/iio/devices/iio\:device0/in_voltage0_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } varwater = data;
+        });
+        //
+        fs.readFile('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } varsmoke = data;
+        });
+        //
+        fs.readFile('/sys/bus/iio/devices/iio\:device0/in_voltage2_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } vartemp = data;
+        });
+        //
+        fs.readFile('/sys/bus/iio/devices/iio\:device0/in_voltage3_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } vargas = data;
+        });
+        //
+        fs.readFile('/sys/bus/iio/devices/iio\:device1/in_voltage0_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } varsolar = data;
+        });
 
+        socket.emit('house', {water:varwater,smoke:varsmoke,temp:vartemp,gas:vargas,solar:varsolar})
+        //console.log(varwater + ' ' + varsmoke + ' ' + ' ' + vartemp + ' ' + vargas + ' ' + varsolar );
+    }, 100)
 }
+
+function readSmartCitySensors(){
+    var varir1 = '00';
+    var varir2 = '00';
+    var varlight = '00';
+    var varsound = '00';
+    var varwind = '00';
+    var vartrash = '00';
+    setInterval(function () {
+
+        //
+        fs.readFile('/sys/bus/iio/devices/iio\:device0/in_voltage0_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } varir1 = data;
+        });
+        //
+        fs.readFile('/sys/bus/iio/devices/iio\:device0/in_voltage1_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } varir2 = data;
+        });
+        //
+        fs.readFile('/sys/bus/iio/devices/iio\:device0/in_voltage2_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } varlight = data;
+        });
+        //
+        fs.readFile('sys/bus/iio/devices/iio\:device0/in_voltage3_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } varsound = data;
+        });
+        //
+        fs.readFile(' /sys/bus/iio/devices/iio\:device1/in_voltage0_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } vartrash = data;
+        });
+        //
+        fs.readFile('/sys/bus/iio/devices/iio\:device1/in_voltage1_raw', 'utf8', function (err,data) {
+            if (err) {
+                return console.log(err);
+            } varwind = data;
+        });
+        socket.emit('smartcity', {ir1:varir1,ir2:varir2,light:varlight,sound:varsound,wind:varwind,trash:vartrash})
+    }, 100)
+}
+
+function readTruckSensors(){
+        var acc = 0;
+        var gyro = 0;
+        var magn =0;
+        var trash =0;
+        console.log('Reading Motion Sensors Values');
+        exec("echo 1 > /sys/class/misc/FreescaleGyroscope/enable", function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('Cannot Enable Gyroscope: '+error);
+            }
+            else {
+                console.log('Gyroscope enabled');
+            }
+        });
+        exec("echo 1 > /sys/class/misc/FreescaleAccelerometer/enable", function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('Cannot Enable Accelerometer: '+error);
+            }
+            else {
+                console.log('Accelerometer enabled');
+            }
+        });
+        exec("echo 1 > /sys/class/misc/FreescaleMagnetometer/enable", function (error, stdout, stderr) {
+            if (error !== null) {
+                console.log('Cannot Enable Magnetometer: '+error);
+            }
+            else {
+                console.log('Magnetometer enabled');
+            }
+        });
+        setInterval(function () {
+
+            fs.readFile('/sys/class/misc/FreescaleAccelerometer/data', 'utf8', function (err,accel) {
+                if (err) {
+                    return console.log(err);
+                }
+                var arr = accel.split(",");
+                arr = arr.map(function (val) { return +val + 1; });
+                acc = Math.sqrt(arr[0]*arr[0]+arr[1]*arr[1]);
+
+                acc = acc - 800;
+                if (acc < 0) acc = 0;
+                acc = Math.floor(acc * (240/17000));
+
+                console.log(acc);
+                //socket.emit('motion',data);
+            });
+            fs.readFile('/sys/class/misc/FreescaleGyroscope/data', 'utf8', function (err,gyrosc) {
+                var self=this;
+                if (err) {
+                    return console.log(err);
+                }
+                str = gyrosc;
+                var arr = str.split(",");
+                arr = arr.map(function (val) { return +val + 1; });
+                gyro = Math.floor(Math.sqrt(((arr[0])*(arr[0]))+(((arr[1]))*(arr[1]))+((arr[2])*(arr[2]))));
+                console.log(gyro);
+                //socket.emit('motion',data);
+            });
+
+            fs.readFile('/sys/class/misc/FreescaleMagnetometer/data', 'utf8', function (err,magnet) {
+                var self=this;
+                if (err) {
+                    return console.log(err);
+                }
+                str = magnet;
+                var arr = str.split(",");
+                arr = arr.map(function (val) { return +val + 1; });
+                magn = Math.floor(Math.sqrt(((arr[0])*(arr[0]))+(((arr[1]))*(arr[1]))+((arr[2])*(arr[2]))));
+                console.log(magn);
+                //socket.emit('motion',data);
+            });
+            socket.emit('truck', {a:acc, g:gyro, m:magn, t:trash})
+    }, 100)
+}
+

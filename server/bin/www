@@ -33,6 +33,21 @@ socket.on('connection', function (socket) {
     socket.broadcast.emit('car2', data);
   });
 
+  socket.on('house', function (data) {
+    //console.log(data);
+    socket.broadcast.emit('house', data);
+  });
+
+  socket.on('smartcity', function (data) {
+    //console.log(data);
+    socket.broadcast.emit('smartcity', data);
+  });
+
+  socket.on('truck', function (data) {
+    //console.log(data);
+    socket.broadcast.emit('truck', data);
+  });
+
 
 });
 
