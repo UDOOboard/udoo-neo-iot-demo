@@ -332,12 +332,39 @@ function readHouseSensors() {
 }
 
 function readSmartCitySensors(){
+
+
     var varir1 = '00';
     var varir2 = '00';
     var varlight = '00';
     var varsound = '00';
     var varwind = '00';
     var vartrash = '00';
+    var varlamp = 'OFF';
+    //Setting GPIO 25 to out
+    exec("echo 25 > /sys/class/gpio/export", function (error, stdout, stderr) {
+        if (error !== null) {
+            console.log('There is a problem setting up gpio 25  '+error);
+        }
+        else {
+            exec("echo out > /sys/class/gpio/gpio25/direction", function (error, stdout, stderr) {
+                if (error !== null) {
+                    console.log('There is a problem setting up gpio 25  '+error);
+                }
+                else {
+                    //Default state off
+                    exec("echo 0 > /sys/class/gpio/gpio25/value", function (error, stdout, stderr) {
+                        if (error !== null) {
+                            console.log('There is a problem setting up gpio 25  '+error);
+                        }
+                        else {
+                        console.log('successfully initialized GPIO 25 ')
+                        }
+                    });
+                }
+            });
+        }
+    });
     setInterval(function () {
 
         //
@@ -376,7 +403,30 @@ function readSmartCitySensors(){
                 return console.log(err);
             } varwind = data;
         });
-        socket.emit('smartcity', {ir1:varir1,ir2:varir2,light:varlight,sound:varsound,wind:varwind,trash:vartrash})
+        var lumen = parseInt(varlight);
+        if (lumen > 10000) {
+            exec("echo 1 > /sys/class/gpio/gpio25/value", function (error, stdout, stderr) {
+                if (error !== null) {
+                    console.log('Cannot turn on LED on 25: '+error);
+                }
+                else {
+                    varlamp = 'ON';
+                    console.log('LED on 25 ON');
+                }
+            });
+        } else {
+            exec("echo 0 > /sys/class/gpio/gpio25/value", function (error, stdout, stderr) {
+                if (error !== null) {
+                    console.log('Cannot turn off LED on 25: '+error);
+                }
+                else {
+                    varlamp = 'OFF';
+                    console.log('LED on 25 OFF');
+                }
+            });
+        }
+
+        socket.emit('smartcity', {ir1:varir1,ir2:varir2,light:varlight,sound:varsound,wind:varwind,trash:vartrash,lamp:varlamp})
     }, 100)
 }
 
