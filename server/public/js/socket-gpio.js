@@ -103,6 +103,7 @@ function notifySmartCityData(data){
     document.getElementById('SmartCitysound').innerHTML=data.sound;
     document.getElementById('SmartCitywind').innerHTML=data.wind;
     document.getElementById('SmartCitytrash').innerHTML=data.trash;
+    document.getElementById('SmartCitylamp').innerHTML=data.lamp;
 }
 
 function notifyTruckData(data){
