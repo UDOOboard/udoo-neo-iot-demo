@@ -371,6 +371,442 @@ table.dataTable thead .sorting:after {
     color: #ec008c !important;
 }
 
+.house-icon {
+    width: 150px;
+}
+
+
+
+
+
+
+
+
+/* car 1 */
+
+@-webkit-keyframes shine {
+	0%{
+		opacity: 0.1;
+		background-position: 50px top;
+	}
+	30% { opacity: 1; }
+	50%, 100%{
+		opacity: 0.2;
+		background-position: -500px 0;
+	}
+}
+
+@keyframes shine {
+	0%{
+		opacity: 0.1;
+		background-position: 50px top;
+	}
+	30% { opacity: 1; }
+	50%, 100%{
+		opacity: 0.2;
+		background-position: -500px 0;
+	}
+}
+
+@-webkit-keyframes bobbing {
+	0%{
+		-webkit-transform: rotate(0) translateY(0);
+	}
+	100%{
+		-webkit-transform: rotate(1deg) translateY(5px);
+	}
+}
+
+@keyframes bobbing {
+	0%{
+		-webkit-transform: rotate(0) translateY(0);
+		transform: rotate(0) translateY(0);
+	}
+	100%{
+		-webkit-transform: rotate(0.1deg) translateY(5px);
+		transform: rotate(0.1deg) translateY(5px);
+	}
+}
+
+@-webkit-keyframes spin {
+	0%{
+		-webkit-transform: rotate(0);
+	}
+	100%{
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	0%{
+		-webkit-transform: rotate(0);
+		transform: rotate(0);
+	}
+	100%{
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}
+
+@-webkit-keyframes thingy {
+	0%{
+		-webkit-transform: translateX(0);
+		width: 0;
+		opacity: 0;
+	}
+	10%{
+		width: 10%;
+		opacity: 1;
+	}
+	30%, 100%{
+		-webkit-transform: translateX(-250px);
+		width: 0;
+		opacity: 0;
+	}
+}
+
+@keyframes thingy {
+	0%{
+		-webkit-transform: translateX(0);
+		transform: translateX(0);
+		width: 0;
+		opacity: 0;
+	}
+	10%{
+		width: 10%;
+		opacity: 1;
+	}
+	30%, 100%{
+		-webkit-transform: translateX(-250px);
+		transform: translateX(-250px);
+		width: 0;
+		opacity: 0;
+	}
+}
+
+@-webkit-keyframes shadow {
+	0%{
+		-webkit-transform: scale(1);
+	}
+	100%{
+		-webkit-transform: scale(1.01);
+	}
+}
+
+@keyframes shadow {
+	0%{
+		-webkit-transform: scale(1);
+		transform: scale(1);
+	}
+	100%{
+		-webkit-transform: scale(1.01);
+		transform: scale(1.01);
+	}
+}
+
+.truck {
+	width: 90%;
+	max-width: 500px;
+	margin: 10px auto;
+	position: relative;
+}
+
+.truck * {
+	position: absolute;
+}
+
+.wheel,
+.wheel:after,
+.wheel:before {
+	bottom: -20%;
+	width: 12.8%;
+	height: 46.38%;
+	border-radius: 100%;
+	background: #1e2327;
+}
+
+.wheel {
+	left: 21.5%;
+	-webkit-animation: spin 0.4s infinite linear;
+	animation: spin 0.4s infinite linear;
+}
+
+
+.wheel.front {
+	left: 82%;
+}
+
+.wheel:after,
+.wheel:before {
+	content: "";
+	position: absolute;
+	display: block;
+	top: 20%;
+	left: 20%;
+	width: 60%;
+	height: 60%;
+}
+
+.wheel:before {
+	background: #aaa;
+}
+
+.wheel:after {
+	top: 40%;
+	left: 40%;
+	width: 20%;
+	height: 20%;
+}
+
+.body {
+	width: 100%;
+	position: relative;
+	-webkit-transform-origin: right center;
+	-ms-transform-origin: right center;
+	transform-origin: right center;
+	-webkit-animation: bobbing 0.2s infinite ease-in-out forwards alternate;
+	animation: bobbing 0.2s infinite ease-in-out forwards alternate;
+}
+
+.frame {
+	position: relative;
+}
+
+.truck img {
+	width: 100%;
+	height: auto;
+	top: 0;
+	left: 0;
+	margin: 0;
+}
+
+.shine {
+	width: 67%;
+	height: 37%;
+	background: #222;
+	left: 9%;
+	top: 6%;
+	-webkit-transform: skew(33deg, 1deg);
+	-ms-transform: skew(33deg, 1deg);
+	transform: skew(33deg, 1deg);
+	border-radius: 56px 100px 20px 0;
+	background: -webkit-gradient(linear, left top, right top, color-stop(76%, transparent), color-stop(78%, rgba(255,255,255,0.8)), color-stop(96%, rgba(255,255,255,0.8)), color-stop(98%, transparent));
+	background: -webkit-linear-gradient(left, transparent 76%, rgba(255,255,255,0.8) 78%, rgba(255,255,255,0.8) 96%, transparent 98%);
+	background: linear-gradient(to right, transparent 76%, rgba(255,255,255,0.8) 78%, rgba(255,255,255,0.8) 96%, transparent 98%);
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	background-size: cover;
+
+	-webkit-animation: shine 3s infinite ease forwards;
+	animation: shine 3s infinite ease forwards;
+}
+
+.speed-thingy {
+	position: absolute;
+	width: 20px;
+	border-radius: 10px;
+	height: 5%;
+	background: #fff;
+	top: -10%;
+	left: 50%;
+	-webkit-animation: thingy 3s infinite ease forwards;
+	animation: thingy 3s infinite ease forwards;
+}
+
+.speed-thingy.second {
+	top: 50%;
+	left: 30%;
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+
+.shadow {
+	width: 85%;
+	border-radius: 100%;
+	height: 20px;
+	bottom: -25%;
+	left: 16%;
+	background: rgba(0,0,0,0.1);
+	-webkit-animation: shadow 0.2s infinite ease-in-out forwards alternate;
+	animation: shadow 0.2s infinite ease-in-out forwards alternate;
+	-webkit-transform-origin: right center;
+	-ms-transform-origin: right center;
+	transform-origin: right center;
+}
+
+.not-animated * {
+	-webkit-animation: none !important;
+	animation: none !important;
+}
+
+.not-animated .shine,
+.not-animated .speed-thingy
+ {
+    display: none;
+}
+
+
+.needle {
+    width: 5px;
+    height: 50px;
+    background: red;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 100%;
+    border-top-right-radius: 100%;
+    display: inline-block;
+    left: -168px;
+    position: relative;
+    top: -12px;
+    transform: rotate(-120deg);
+    transform-origin:bottom;
+}
+
+.camionnnn .needle {
+    left: 62px;
+    top: -189px;
+}
+
+
+
+
+
+
+
+
+.camion .truck {
+	width: 90%;
+	max-width: 500px;
+	margin: 10px auto;
+	position: relative;
+}
+
+.camion .truck * {
+	position: absolute;
+}
+
+.camion .wheel,
+.camion .wheel:after,
+.camion .wheel:before {
+	bottom: -10%;
+	width: 12.8%;
+	height: 26.38%;
+	border-radius: 100%;
+	background: #1e2327;
+}
+
+.camion .wheel {
+	left: 18.5%;
+	-webkit-animation: spin 0.4s infinite linear;
+	animation: spin 0.4s infinite linear;
+}
+
+.camion .wheel.front {
+	left: 69%;
+}
+
+.camion .wheel:after,
+.camion .wheel:before {
+	content: "";
+	position: absolute;
+	display: block;
+	top: 20%;
+	left: 20%;
+	width: 60%;
+	height: 60%;
+}
+
+.camion .wheel:before {
+	background: #aaa;
+}
+
+.camion .wheel:after {
+	top: 40%;
+	left: 40%;
+	width: 20%;
+	height: 20%;
+}
+
+.camion .body {
+	width: 100%;
+	position: relative;
+	-webkit-transform-origin: right center;
+	-ms-transform-origin: right center;
+	transform-origin: right center;
+	-webkit-animation: bobbing 0.2s infinite ease-in-out forwards alternate;
+	animation: bobbing 0.2s infinite ease-in-out forwards alternate;
+}
+
+.camion .frame {
+	position: relative;
+}
+
+.camion .truck img {
+	width: 100%;
+	height: auto;
+	top: 0;
+	left: 0;
+	margin: 0;
+}
+
+.camion .shine {
+	width: 67%;
+	height: 37%;
+	background: #222;
+	left: 9%;
+	top: 6%;
+	-webkit-transform: skew(33deg, 1deg);
+	-ms-transform: skew(33deg, 1deg);
+	transform: skew(33deg, 1deg);
+	border-radius: 56px 100px 20px 0;
+	background: -webkit-gradient(linear, left top, right top, color-stop(76%, transparent), color-stop(78%, rgba(255,255,255,0.8)), color-stop(96%, rgba(255,255,255,0.8)), color-stop(98%, transparent));
+	background: -webkit-linear-gradient(left, transparent 76%, rgba(255,255,255,0.8) 78%, rgba(255,255,255,0.8) 96%, transparent 98%);
+	background: linear-gradient(to right, transparent 76%, rgba(255,255,255,0.8) 78%, rgba(255,255,255,0.8) 96%, transparent 98%);
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	background-size: cover;
+
+	-webkit-animation: shine 3s infinite ease forwards;
+	animation: shine 3s infinite ease forwards;
+}
+
+.camion .speed-thingy {
+	position: absolute;
+	width: 20px;
+	border-radius: 10px;
+	height: 5%;
+	background: #fff;
+	top: -10%;
+	left: 50%;
+	-webkit-animation: thingy 3s infinite ease forwards;
+	animation: thingy 3s infinite ease forwards;
+}
+
+.camion .speed-thingy.second {
+	top: 50%;
+	left: 30%;
+	-webkit-animation-delay: 0.1s;
+	animation-delay: 0.1s;
+}
+
+.camion .shadow {
+	width: 90%;
+	border-radius: 100%;
+	height: 20px;
+	bottom: -25%;
+	left: 5%;
+	background: rgba(0,0,0,0.1);
+	-webkit-animation: shadow 0.2s infinite ease-in-out forwards alternate;
+	animation: shadow 0.2s infinite ease-in-out forwards alternate;
+	-webkit-transform-origin: right center;
+	-ms-transform-origin: right center;
+	transform-origin: right center;
+}
+
+
+
+
+
 
 
 

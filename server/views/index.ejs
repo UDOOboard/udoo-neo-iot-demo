@@ -15,6 +15,7 @@
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 <a class="navbar-brand">UDOO Neo IoT playground</a>
+                <span style="position:absolute;right:10px;top:10px;" id="ConnStatus">Not Connected</span>
             </div>
         </nav>
 
@@ -23,14 +24,41 @@
                 <div class="col-xs-6">
                     <div class="panel panel-warning" style="margin-left:15px;">
                         <div class="panel-heading">
-                            Smart Home
+                            Smart Home 
+                            <span class="pull-right">House IP: 192.168.0.4</span>
                         </div>
                         <div class="panel-body">
-                            <span id="HouseWater">Water</span>
-                            <span id="HouseSmoke">Smoke</span>
-                            <span id="HouseTemp">Temp</span>
-                            <span id="HouseGas">Gas</span>
-                            <span id="HouseSolar">Solar</span>
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <canvas id="house-temp" width="100" height="250" style="margin-left:30px;">
+                                [No canvas support]
+                                </canvas>
+                            </div>
+                            <div class="col-xs-10">
+                                <canvas id="house-temp-serie" width="680" height="250">
+                                    [No canvas support]
+                                </canvas>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3" style="text-align:center;">
+                                <h3>Water sensor</h3>
+                                <img id="house-water" class="house-icon" src="/images/water.png">
+                            </div>
+                            <div class="col-xs-3" style="text-align:center;">
+                                <h3>Smoke sensor</h3>
+                                <img id="house-smoke" class="house-icon" src="/images/fire.png">
+                            </div>
+                            <div class="col-xs-3" style="text-align:center;">
+                                    <h3>Gas sensor</h3>
+                                <img id="house-gas" class="house-icon" src="/images/gas.png">
+                            </div>
+                            <div class="col-xs-3" style="text-align:center;">
+                                    <h3>Solar panel</h3>
+                                <img id="house-solar" class="house-icon" src="/images/sun.png">
+                            </div>
+                        </div>
+                            
                         </div>
                     </div>
                 </div>
@@ -38,16 +66,72 @@
                 <div class="col-xs-6">
                     <div class="panel panel-warning" style="margin-right:15px;">
                         <div class="panel-heading">
-                            Smart Parking
+                            Smart Cars 
+                            <span class="pull-right">Car1 IP: 192.168.1.101 &middot; Car2 IP: 192.168.1.102</span>
                         </div>
                         <div class="panel-body">
-                            <span id="SmartCityir1">Water</span>
-                            <span id="SmartCityir2">Smoke</span>
-                            <span id="SmartCitylight">Temp</span>
-                            <span id="SmartCitysound">Gas</span>
-                            <span id="SmartCitywind">Solar</span>
-                            <span id="SmartCitytrash">Solar</span>
+                            
+                            <div class="row">
+                                <div class="col-xs-6" style="text-align:center;">
+                                    <h3 style="margin-top: 9px;">Car 1</h3>
+                                    <div class="truck-container not-animated" id="mycar1">
+                                        <div class="truck">
+                                        <div class="body">
+                                        <img src="/images/truck-under-gialla.svg" width="500" height="136" data-cms-original-src="truck-under-gialla.svg">
+                                        <div class="shine"></div>
+                                        <img src="/images/truck-frame-gialla.svg" width="500" height="136" class="frame" data-cms-original-src="truck-frame-gialla.svg">
+                                        </div>
+
+                                        <div class="speed-thingy"></div>
+                                        <div class="speed-thingy second"></div>
+                                        <div class="shadow"></div>
+
+                                        <div class="wheel back"></div>
+                                        <div class="wheel front"></div>
+                                        </div>
+                                    </div>
+
+                                    <br><br>
+                                    
+                                    <div id="car1speedx" style="text-align:center;">
+                                        <img src="/images/display.png">
+                                        <div class="needle"></div>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="col-xs-6" style="text-align:center;">
+                                    <h3 style="margin-top: 9px;">Car 2</h3>
+                                    <div class="truck-container not-animated" id="mycar2">
+                                        <div class="truck">
+                                        <div class="body">
+                                        <img src="/images/truck-under-red.svg" width="500" height="136" data-cms-original-src="truck-under-gialla.svg">
+                                        <div class="shine"></div>
+                                        <img src="/images/truck-frame-red.svg" width="500" height="136" class="frame" data-cms-original-src="truck-frame-gialla.svg">
+                                        </div>
+
+                                        <div class="speed-thingy"></div>
+                                        <div class="speed-thingy second"></div>
+                                        <div class="shadow"></div>
+
+                                        <div class="wheel back"></div>
+                                        <div class="wheel front"></div>
+                                        </div>
+                                    </div>
+
+                                    <br><br>
+                                    
+                                    <div id="car2speedx">
+                                        <img src="/images/display.png">
+                                        <div class="needle"></div>
+                                    </div>
+                                    
+                                    <!-- <div style="height:35px;">&nbsp;</div> -->
+                                </div>
+                            </div>
+                            
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -55,28 +139,42 @@
             <div class="row">
                 <div class="col-xs-6">
                     <div class="panel panel-warning" style="margin-left:15px;">
+                        
                         <div class="panel-heading">
-                            Smart Car
+                            Smart Parking
+                            <span class="pull-right">Infrastructure IP: 192.168.0.3</span>
                         </div>
                         <div class="panel-body">
                             
-                            
-                            <span id="ConnStatus">Not Connected</span>
-                            <div> <h3>Car1 </h3>
-                            <span id="MotionCar1acc">ACC</span>
-                            <span id="MotionCar1mag">MAG</span>
-                            <span id="MotionCar1gyr">GYR</span></div>
-                            <div> <h3>Car2 </h3>
-                            <span id="MotionCar2acc">ACC</span>
-                            <span id="MotionCar2mag">MAG</span>
-                            <span id="MotionCar2gyr">GYR</span></div>
-
-                            <canvas id="car1speed" width="250" height="250" style="background-color: black; border-radius: 125px; box-shadow: 0 0 25px gray; border: 5px solid #ddd">
-                            [No canvas support]
-                            </canvas>
-                            
+                            <div class="row">
+                                <div class="col-xs-3" style="text-align:center;">
+                                    <h3>Park 1</h3>
+                                    <img id="smartcity-p1" class="house-icon" src="/images/p1.png">
+                                </div>
+                                <div class="col-xs-3" style="text-align:center;">
+                                    <h3>Park 2</h3>
+                                    <img id="smartcity-p2" class="house-icon" src="/images/p2.png">
+                                </div>
+                                <div class="col-xs-3" style="text-align:center;">
+                                    <h3>Street light</h3>
+                                    <img id="smartcity-light" class="house-icon" src="/images/light.png">
+                                </div>
+                                <div class="col-xs-3" style="text-align:center;">
+                                    <h3>Lumen</h3>
+                                    <div style="height:50px;">&nbsp;</div>
+                                    <div class="progress">
+                                      <div id="smartcity-lumen" class="progress-bar progress-bar-warning progress-bar-striped" role="progressbar" 
+                                        style="width: 60%;">
+                                        <span class="sr-only"></span>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
                             
                         </div>
+                        
+                        
+                        
                     </div>
                 </div>
                 
@@ -84,12 +182,38 @@
                     <div class="panel panel-warning" style="margin-right:15px;">
                         <div class="panel-heading">
                             Smart Truck
+                            <span class="pull-right">Truck IP: 192.168.0.5</span>
                         </div>
                         <div class="panel-body">
-                            <span id="Truckacc">ACC</span>
-                            <span id="Truckmag">MAG</span>
-                            <span id="Truckgyr">GYR</span>
-                            <span id="Truckdoor">GYR</span>
+                            
+                            <div class="row">
+                                <div class="col-xs-3 camionnnn">
+                                    <div id="truckspeedx" style="text-align:center;">
+                                        <img src="/images/display.png">
+                                        <div class="needle"></div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="col-xs-9">
+                                    <div class="truck-container camion" style="margin-left:50px;" id="mytruck">
+                                        <div class="truck">
+                                        <div class="body">
+                                        <div class="shine"></div>
+                                        <img src="/images/truck-frame-camion.svg" width="530" height="245" class="frame" data-cms-original-src="truck-frame-camion.svg">
+                                        </div>
+
+                                        <div class="speed-thingy"></div>
+                                        <div class="speed-thingy second"></div>
+                                        <div class="shadow"></div>
+
+                                        <div class="wheel back"></div>
+                                        <div class="wheel front"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        
                         </div>
                     </div>
                 </div>
@@ -104,10 +228,18 @@
     <script src="js/rgraph/libraries/RGraph.common.dynamic.js"></script>
     <script src="js/rgraph/libraries/RGraph.common.effects.js"></script>
     <script src="js/rgraph/libraries/RGraph.gauge.js"></script>
+    <script src="js/rgraph/libraries/RGraph.line.js" ></script>
+    <script src="js/rgraph/libraries/RGraph.thermometer.js"></script>
     <script type='text/javascript' src='js/socket-gpio.js'></script>
     <script>
         window.onload = function () {
-            createGauge("car1speed", 240);
+            
+            window.widgets.housetemp = new RGraph.Thermometer({
+                id: 'house-temp',
+                min: 0,
+                max: 50,
+                value: 0
+            }).draw()
         };
     </script>
 </body>
