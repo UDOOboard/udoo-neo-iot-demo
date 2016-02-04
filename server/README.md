@@ -10,6 +10,6 @@ $ npm install express serve-favicon morgan cookie-parser body-parser socket.io e
 
 - To run the server:
 
-$ node /bin/www
+$ node bin/www
 
 The ui is located at ip:3000
