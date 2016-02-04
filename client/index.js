@@ -344,18 +344,18 @@ function readSmartCitySensors(){
     //Setting GPIO 25 to out
     exec("echo 25 > /sys/class/gpio/export", function (error, stdout, stderr) {
         if (error !== null) {
-            console.log('There is a problem setting up gpio 25  '+error);
+            console.log('There is a problem exporting gpio 25  '+error);
         }
         else {
             exec("echo out > /sys/class/gpio/gpio25/direction", function (error, stdout, stderr) {
                 if (error !== null) {
-                    console.log('There is a problem setting up gpio 25  '+error);
+                    console.log('There is a problem setting direction of gpio 25  '+error);
                 }
                 else {
                     //Default state off
                     exec("echo 0 > /sys/class/gpio/gpio25/value", function (error, stdout, stderr) {
                         if (error !== null) {
-                            console.log('There is a problem setting up gpio 25  '+error);
+                            console.log('There is a problem setting value of gpio 25  '+error);
                         }
                         else {
                         console.log('successfully initialized GPIO 25 ')
@@ -404,7 +404,7 @@ function readSmartCitySensors(){
             } varwind = data;
         });
         var lumen = parseInt(varlight);
-        if (lumen > 10000) {
+        if (lumen > 800) {
             exec("echo 1 > /sys/class/gpio/gpio25/value", function (error, stdout, stderr) {
                 if (error !== null) {
                     console.log('Cannot turn on LED on 25: '+error);
