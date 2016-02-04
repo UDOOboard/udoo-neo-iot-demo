@@ -5,11 +5,10 @@
 var exec = require('child_process').exec;
 fs = require('fs');
 var argv = require('yargs')
-                    .usage('Usage: $0 -i Ip Address of Server, -s Sensor to use')
+                    .usage('Usage: $0 -i xxx.xxx.xxx.xxx -s [car1|car2|house|smartcity|truck]')
                     .demand(['i', 's'])
-    .describe('-s', 'Sensors to Use')
-    .describe('all', 'Read Values from all sensors')
-    .describe('motion', 'Read Values from Motion Sensors')
+		    .describe('i', 'Server IP address')
+		    .describe('s', 'Client to use [car1|car2|house|smartcity|truck]')
                     .argv;
 var socket = require('socket.io-client')('http://'+argv.i+':3000');
 
