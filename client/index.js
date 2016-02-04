@@ -386,13 +386,13 @@ function readSmartCitySensors(){
             } varlight = data;
         });
         //
-        fs.readFile('sys/bus/iio/devices/iio\:device0/in_voltage3_raw', 'utf8', function (err,data) {
+        fs.readFile('/sys/bus/iio/devices/iio\:device0/in_voltage3_raw', 'utf8', function (err,data) {
             if (err) {
                 return console.log(err);
             } varsound = data;
         });
         //
-        fs.readFile(' /sys/bus/iio/devices/iio\:device1/in_voltage0_raw', 'utf8', function (err,data) {
+        fs.readFile('/sys/bus/iio/devices/iio\:device1/in_voltage0_raw', 'utf8', function (err,data) {
             if (err) {
                 return console.log(err);
             } vartrash = data;
