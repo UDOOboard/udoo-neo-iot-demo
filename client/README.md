@@ -1,3 +1,13 @@
-To start:
+- Install node
 
-node index.js -i (ip of the server) -s (sensors to be used, use car1 or car2 for now)
+$ sudo apt install nodejs
+
+
+- Install node modules 
+
+$ npm install yargs socket.io-client 
+
+
+- To run client:
+
+$ node index.js -i (ip of the server) -s (sensor to be used [car1|car2|house|smartcity|truck])
